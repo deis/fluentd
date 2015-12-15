@@ -15,9 +15,9 @@ RUN apk --update add --virtual build-dependencies build-base openssl-dev \
 RUN gem update --system --no-document && \
     gem install --no-document json_pure && \
     gem install --no-document fluentd -v ${FLUENTD_VERSION} && \
-    gem install fluent-plugin-kubernetes_metadata_filter && \
-    gen install fluent-plugin-elasticsearch && \
-    gem install fluent-plugin-remote_syslog && \
+    gem install --no-document fluent-plugin-kubernetes_metadata_filter && \
+    gem install --no-document fluent-plugin-elasticsearch && \
+    gem install --no-document fluent-plugin-remote_syslog && \
     gem cleanup fluentd
 
 RUN mkdir /etc/fluent
