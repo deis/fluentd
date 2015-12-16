@@ -11,7 +11,7 @@ This plugin is used to decorate all log entries with kubernetes metadata.
 ### [fluent-plugin-elasticsearch](https://github.com/uken/fluent-plugin-elasticsearch)
 Allows fluentd to send log data to an elastic search cluster. You must specify an `ELASTICSEARCH_HOST` environment variable for this plugin to work.
 
-### [fluent-plugin-remote_syslog]https://github.com/dlackty/fluent-plugin-remote_syslog
+### [fluent-plugin-remote_syslog](https://github.com/dlackty/fluent-plugin-remote_syslog)
 This plugin allows `fluentd` to send data to a remote syslog endpoint like [papertrail](http://papertrailapp.com). You can configure `fluentd` to talk to multiple remote syslog endpoints by using the following scheme:
 * `SYSLOG_HOST_1=some.host`
 * `SYSLOG_PORT_1=514`
