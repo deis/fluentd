@@ -1,27 +1,25 @@
-FROM alpine:3.2
+FROM centos:7
 MAINTAINER jchauncey@deis.com
+
+RUN yum update -y && \
+    yum install -y https://www.softwarecollections.org/en/scls/rhscl/rh-ruby22/epel-7-x86_64/download/rhscl-rh-ruby22-epel-7-x86_64.noarch.rpm && \
+    yum install -y net-tools scl-utils make gcc gcc-c++ bzip2 rh-ruby22 rh-ruby22-ruby-devel && \
+    yum clean all
+
 ENV FLUENTD_VERSION 0.14.0.pre.1
+ENV LD_LIBRARY_PATH /opt/rh/rh-ruby22/root/usr/lib64
 
-RUN apk update && apk upgrade && \
-    apk add ruby-json ruby-irb ruby-nokogiri ruby-thread_safe ruby-tzinfo bash && \
-    apk add build-base ruby-dev && \
-    apk add ruby-nokogiri jemalloc
-
-RUN apk --update add --virtual build-dependencies build-base openssl-dev \
-    libc-dev linux-headers && \
-    apk add ruby-nokogiri && \
-    apk del build-dependencies
-
-RUN gem update --system --no-document && \
-    gem install --no-document json_pure && \
-    gem install --no-document fluentd -v ${FLUENTD_VERSION} && \
-    gem install --no-document fluent-plugin-kubernetes_metadata_filter && \
-    gem install --no-document fluent-plugin-elasticsearch && \
-    gem install --no-document fluent-plugin-remote_syslog && \
-    gem cleanup fluentd
+RUN scl enable rh-ruby22 'gem update --system --no-document' && \
+    scl enable rh-ruby22 'gem install --no-document json_pure jemalloc' && \
+    scl enable rh-ruby22 "gem install --no-document fluentd -v ${FLUENTD_VERSION}" && \
+    scl enable rh-ruby22 'gem install --no-document fluent-plugin-kubernetes_metadata_filter' && \
+    scl enable rh-ruby22 'gem install --no-document fluent-plugin-elasticsearch' && \
+    scl enable rh-ruby22 'gem install --no-document fluent-plugin-remote_syslog' && \
+    scl enable rh-ruby22 'gem cleanup fluentd' && \
+    ln -s /opt/rh/rh-ruby22/root/usr/local/bin/* /usr/bin
 
 RUN mkdir /etc/fluent
-COPY fluent.conf fluent.conf
+COPY fluent.conf /etc/fluent/fluent.conf
 COPY start-fluentd /start-fluentd
 
 ENTRYPOINT ["/start-fluentd"]

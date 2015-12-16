@@ -1,5 +1,5 @@
 ## Description
-This is an [alpine 3.2](http://www.alpinelinux.org/) based image for running [fluentd](http://fluentd.org). It is built for the purpose of running on a kubernetes cluster.
+This is an centos7 based image for running [fluentd](http://fluentd.org). It is built for the purpose of running on a kubernetes cluster.
 
 This work is based on the [docker-fluentd](https://github.com/fabric8io/docker-fluentd) and [docker-fluentd-kubernetes](https://github.com/fabric8io/docker-fluentd-kubernetes) images by the fabric8 team. This image is in with [deis](https://github.com/deis/deis) v2 to send all log data to the [logger](https://github.com/deis/logger) component.
 
