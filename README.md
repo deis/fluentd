@@ -18,4 +18,4 @@ This plugin allows `fluentd` to send data to a remote syslog endpoint like [pape
 * `SYSLOG_HOST_2=some.other.host`
 * `SYSLOG_PORT_2=52232`
 
-You can also set `SYSLOG_HOST` and `SYSLOG_PORT`.
+You can also set `SYSLOG_HOST` and `SYSLOG_PORT`..
