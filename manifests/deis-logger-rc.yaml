@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ReplicationController
 metadata:
   name: deis-logger
+  namespace: deis
   labels:
     heritage: deis
 spec:
@@ -15,7 +16,7 @@ spec:
     spec:
       containers:
       - name: deis-logger
-        image: 
+        image:
         imagePullPolicy: Always
         ports:
         - containerPort: 8088
