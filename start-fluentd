@@ -23,6 +23,9 @@ cat << EOF >> /etc/fluent/fluent.conf
   </source>
   <filter kubernetes.**>
     type kubernetes_metadata
+    kubernetes_url https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}
+    bearer_token_file /run/secrets/kubernetes.io/serviceaccount/token
+    verify_ssl false
   </filter>
   <match **>
   @type copy
