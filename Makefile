@@ -1,7 +1,8 @@
 SHORT_NAME ?= fluentd
 BUILD_TAG ?= git-$(shell git rev-parse --short HEAD)
-DEIS_REGISTRY ?= ${DEV_REGISTRY}/
-IMAGE_PREFIX ?= deisci
+DEIS_REGISTRY ?= ${DEV_REGISTRY}
+IMAGE_PREFIX ?= deis
+IMAGE_LATEST := ${DEIS_REGISTRY}${IMAGE_PREFIX}/${SHORT_NAME}:latest
 IMAGE := ${DEIS_REGISTRY}${IMAGE_PREFIX}/${SHORT_NAME}:${BUILD_TAG}
 
 info:
@@ -10,7 +11,8 @@ info:
 	@echo "Image:      ${IMAGE}"
 
 docker-build:
-	docker build --rm -t ${IMAGE} .
+	docker build -t ${IMAGE_LATEST} .
+	docker tag ${IMAGE_LATEST} ${IMAGE}
 
 docker-push:
 	docker push ${IMAGE}
