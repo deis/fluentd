@@ -11,8 +11,8 @@ info:
 	@echo "Image:      ${IMAGE}"
 
 docker-build:
-	docker build -t ${IMAGE_LATEST} .
-	docker tag ${IMAGE_LATEST} ${IMAGE}
+	docker build -t $(IMAGE_LATEST) .
+	docker tag $(IMAGE_LATEST) $(IMAGE)
 
 docker-push:
 	docker push ${IMAGE}
