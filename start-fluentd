@@ -10,7 +10,19 @@ FLUENTD_BUFFER_QUEUE_LIMIT=${FLUENTD_BUFFER_QUEUE_LIMIT:-8192}
 FLUENTD_BUFFER_TYPE=${FLUENTD_BUFFER_TYPE:-memory}
 FLUENTD_BUFFER_PATH=${FLUENTD_BUFFER_PATH:-/var/fluentd/buffer}
 
-cat << EOF >> /etc/fluent/fluent.conf
+if [ -n "$KUBERNETES_SERVICE_HOST" ]
+then
+cat << EOF >> /fluentd/fluent.conf
+<filter kubernetes.**>
+  type kubernetes_metadata
+  kubernetes_url https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}
+  bearer_token_file /var/run/secrets/kubernetes.io/serviceaccount/token
+  verify_ssl false
+</filter>
+EOF
+fi
+
+cat << EOF >> /fluentd/fluent.conf
   <source>
     type tail
     path /var/log/containers/*.log
@@ -21,12 +33,6 @@ cat << EOF >> /etc/fluent/fluent.conf
     read_from_head true
     keep_time_key true
   </source>
-  <filter kubernetes.**>
-    type kubernetes_metadata
-    kubernetes_url https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}
-    bearer_token_file /run/secrets/kubernetes.io/serviceaccount/token
-    verify_ssl false
-  </filter>
   <match **>
   @type copy
 EOF
@@ -37,7 +43,7 @@ if [ -n "$ELASTICSEARCH_HOST" ]
   ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT:-9200}
   ELASTICSEARCH_SCHEME=${ELASTICSEARCH_SCHEME:-http}
 
-cat << EOF >> /etc/fluent/fluent.conf
+cat << EOF >> /fluentd/fluent.conf
 <store>
   @type elasticsearch
   log_level warn
@@ -69,7 +75,7 @@ port=$(eval "echo \$SYSLOG_PORT_$i")
 if [ -n "$host" ]
 then
 echo "Starting fluentd with syslog configuration! -- $host:$port"
-cat << EOF >> /etc/fluent/fluent.conf
+cat << EOF >> /fluentd/fluent.conf
 <store>
   @type remote_syslog
   host $host
@@ -83,7 +89,7 @@ done
 if [ -n "$SYSLOG_HOST" ]
 then
 echo "Starting fluentd with syslog configuration! -- $SYSLOG_HOST:$SYSLOG_PORT"
-cat << EOF >> /etc/fluent/fluent.conf
+cat << EOF >> /fluentd/fluent.conf
 <store>
   @type remote_syslog
   host $SYSLOG_HOST
@@ -93,8 +99,8 @@ cat << EOF >> /etc/fluent/fluent.conf
 EOF
 fi
 
-cat << EOF >> /etc/fluent/fluent.conf
+cat << EOF >> /fluentd/fluent.conf
 </match>
 EOF
 
-exec je fluentd
+exec fluentd -c /fluentd/fluent.conf
