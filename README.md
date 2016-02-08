@@ -1,4 +1,12 @@
 ## Description
+
+Deis (pronounced DAY-iss) is an open source PaaS that makes it easy to deploy and manage
+applications on your own servers. Deis builds on [Kubernetes](http://kubernetes.io/) to provide
+a lightweight, [Heroku-inspired](http://heroku.com) workflow.
+
+![Deis Graphic](https://s3-us-west-2.amazonaws.com/get-deis/deis-graphic-small.png)
+
+## About
 This is an centos7 based image for running [fluentd](http://fluentd.org). It is built for the purpose of running on a kubernetes cluster.
 
 This work is based on the [docker-fluentd](https://github.com/fabric8io/docker-fluentd) and [docker-fluentd-kubernetes](https://github.com/fabric8io/docker-fluentd-kubernetes) images by the fabric8 team. This image is in with [deis](https://github.com/deis/deis) v2 to send all log data to the [logger](https://github.com/deis/logger) component.
