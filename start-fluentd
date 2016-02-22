@@ -30,7 +30,7 @@ cat << EOF >> /fluentd/fluent.conf
     time_format %Y-%m-%dT%H:%M:%S.%N
     tag kubernetes.*
     format json
-    read_from_head true
+    read_from_head false
     keep_time_key true
   </source>
   <match **>
