@@ -40,7 +40,7 @@ main() {
    # if REPOROOT is already in the environment, don't overload it and use that
    if [ -z "$REPOROOT" ];
    then
-       REPOROOT="https://github.com/deis/deis"
+       REPOROOT="https://github.com/deis/fluentd"
    fi
 
    # if TYPES is already in the environment, don't overload it and use that
