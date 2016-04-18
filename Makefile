@@ -10,19 +10,10 @@ docker-build:
 	docker tag -f ${IMAGE} ${MUTABLE_IMAGE}
 
 kube-delete:
-	-kubectl delete -f manifests/deis-logger-svc.yaml
-	-kubectl delete -f manifests/deis-logger-rc.yaml
 	-kubectl delete -f manifests/deis-logger-fluentd-daemon.tmp.yaml
 
 kube-create: update-manifests
-	kubectl create -f manifests/deis-logger-svc.yaml
-	kubectl create -f manifests/deis-logger-rc.yaml
 	kubectl create -f manifests/deis-logger-fluentd-daemon.tmp.yaml
-
-kube-replace: docker-build docker-push update-manifests
-	kubectl replace --force -f manifests/deis-logger-svc.yaml
-	kubectl replace --force -f manifests/deis-logger-rc.yaml
-	kubectl replace --force -f manifests/deis-logger-fluentd-daemon.tmp.yaml
 
 kube-update: update-manifests
 	kubectl delete -f manifests/deis-logger-fluentd-daemon.tmp.yaml

@@ -6,15 +6,21 @@ metadata:
   labels:
     heritage: deis
 spec:
+  selector:
+    matchLabels:
+      app: deis-logger-fluentd
+      heritage: deis
   template:
     metadata:
       name: deis-logger-fluentd
       labels:
         heritage: deis
+        app: deis-logger-fluentd
     spec:
+      serviceAccount: deis-logger-fluentd
       containers:
       - name: deis-logger-fluentd
-        image: quay.io/deis/fluentd:v2-beta
+        image: quay.io/deisci/fluentd:canary
         imagePullPolicy: Always
         securityContext:
           privileged: true
@@ -25,9 +31,9 @@ spec:
           mountPath: /var/lib/docker/containers
           readOnly: true
         env:
-        - name: "SYSLOG_HOST"
+        - name: SYSLOG_HOST
           value: $(DEIS_LOGGER_SERVICE_HOST)
-        - name: "SYSLOG_PORT"
+        - name: SYSLOG_PORT
           value: $(DEIS_LOGGER_SERVICE_PORT_TRANSPORT)
       volumes:
       - name: varlog
@@ -36,3 +42,4 @@ spec:
       - name: varlibdockercontainers
         hostPath:
           path: /var/lib/docker/containers
+
