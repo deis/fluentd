@@ -5,6 +5,12 @@ IMAGE_PREFIX ?= deis
 
 include versioning.mk
 
+build: docker-build
+push: docker-push
+install: kube-install
+uninstall: kube-delete
+upgrade: kube-update
+
 docker-build:
 	docker build -t ${IMAGE} .
 	docker tag -f ${IMAGE} ${MUTABLE_IMAGE}
