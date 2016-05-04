@@ -201,8 +201,6 @@ cat << EOF >> /fluentd/fluent.conf
 </match>
 EOF
 
-cat /fluentd/fluent.conf
-
 echo "Sleeping for 15 seconds so the logger component has time to come up"
 sleep 15
 

@@ -15,7 +15,7 @@ RUN mkdir -p /fluentd
 
 COPY fluent.conf /fluentd/fluent.conf
 COPY start-fluentd /start-fluentd
-
+COPY out_remote_syslog.rb /usr/lib/ruby/gems/2.2.0/gems/fluent-plugin-remote_syslog-0.3.2/lib/fluent/plugin/out_remote_syslog.rb
 ENV FLUENTD_CONF="fluent.conf"
 
 ENTRYPOINT ["/start-fluentd"]
