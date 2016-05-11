@@ -19,7 +19,6 @@ module Fluent
     config_param :facility, :string, :default => "user"
     config_param :severity, :string, :default => "notice"
     config_param :tag, :string, :default => "fluentd"
-    @@loggers = {}
 
     def initialize
       super
@@ -27,7 +26,7 @@ module Fluent
     end
 
     def start
-      @@loggers[@host] = {"port": @port}
+      super
     end
 
     def shutdown
