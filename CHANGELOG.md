@@ -1,3 +1,15 @@
+### v2.0.0-beta3 -> v2.0.0-beta4
+
+#### Documentation
+
+docs(CHANGELOG.md): update for v2.0.0-beta3
+ - [`b941f64`](https://github.com/deis/fluentd/commit/b941f64b1e251456ad933b8a958519873c51af69) CHANGELOG.md: update for v2.0.0-beta3
+
+#### Maintenance
+
+- [`f73e095`](https://github.com/deis/fluentd/commit/f73e095aec3278154cd076e14ed6909c238812ff): fix: Create new UDPSender for each message we get
+    The plugin was trying to reuse connection information but this meant that if the other end died the packets would never be sent. Instead we now keep a global list of host:ports we want to send data to and iterate that list creating a new sender each time. This is wrapped in a begin/rescue/ensure block for protection
+
 ### v2.0.0-beta2 -> v2.0.0-beta3
 
 #### Fixes
