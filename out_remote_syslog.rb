@@ -44,15 +44,13 @@ module Fluent
         end
 
         tag = rewrite_tag!(tag.dup)
-        @@loggers.each_key do |host|
-          begin
-            sender = RemoteSyslogLogger::UdpSender.new(host, @@loggers[host][:port], {facility: @facility, severity: @severity, program: tag, local_hostname: @hostname})
-            sender.transmit format(tag, time, record)
-          rescue Exception => e
-            puts "Error:#{e.message}"
-          ensure
-            sender.close
-          end
+        sender = RemoteSyslogLogger::UdpSender.new(@host, @port, {facility: @facility, severity: @severity, program: tag, local_hostname: @hostname})
+        begin
+          sender.transmit format(tag, time, record)
+        rescue Exception => e
+          puts "Error:#{e.message}"
+        ensure
+          sender.close if sender
         end
       end
     end
