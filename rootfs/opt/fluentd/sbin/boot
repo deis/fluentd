@@ -1,4 +1,5 @@
 #!/bin/bash
+FLUENTD_CONF="/opt/fluentd/conf/fluentd.conf"
 FLUENTD_FLUSH_INTERVAL=${FLUENTD_FLUSH_INTERVAL:-10s}
 FLUENTD_FLUSH_THREADS=${FLUENTD_FLUSH_THREADS:-1}
 FLUENTD_RETRY_LIMIT=${FLUENTD_RETRY_LIMIT:-10}
@@ -12,7 +13,7 @@ FLUENTD_BUFFER_PATH=${FLUENTD_BUFFER_PATH:-/var/fluentd/buffer}
 
 if [ -e "/var/log/containers" ]
 then
-cat << EOF >> /fluentd/fluent.conf
+cat << EOF >> $FLUENTD_CONF
 <source>
   type tail
   path /var/log/containers/*.log
@@ -120,7 +121,7 @@ fi
 
 if [ -n "$KUBERNETES_SERVICE_HOST" ]
 then
-cat << EOF >> /fluentd/fluent.conf
+cat << EOF >> $FLUENTD_CONF
   <filter kubernetes.**>
     type kubernetes_metadata
     kubernetes_url https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}
@@ -130,7 +131,7 @@ cat << EOF >> /fluentd/fluent.conf
 EOF
 fi
 
-cat << EOF >> /fluentd/fluent.conf
+cat << EOF >> $FLUENTD_CONF
 <match **>
   @type copy
 EOF
@@ -141,7 +142,7 @@ then
   ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT:-9200}
   ELASTICSEARCH_SCHEME=${ELASTICSEARCH_SCHEME:-http}
 
-cat << EOF >> /fluentd/fluent.conf
+cat << EOF >> $FLUENTD_CONF
 <store>
   @type elasticsearch
   log_level warn
@@ -173,7 +174,7 @@ port=$(eval "echo \$SYSLOG_PORT_$i")
 if [ -n "$host" ]
 then
 echo "Starting fluentd with syslog configuration! -- $host:$port"
-cat << EOF >> /fluentd/fluent.conf
+cat << EOF >> $FLUENTD_CONF
 <store>
   @type remote_syslog
   host $host
@@ -187,7 +188,7 @@ done
 if [ -n "$SYSLOG_HOST" ]
 then
 echo "Starting fluentd with syslog configuration! -- $SYSLOG_HOST:$SYSLOG_PORT"
-cat << EOF >> /fluentd/fluent.conf
+cat << EOF >> $FLUENTD_CONF
 <store>
   @type remote_syslog
   host $SYSLOG_HOST
@@ -197,11 +198,11 @@ cat << EOF >> /fluentd/fluent.conf
 EOF
 fi
 
-cat << EOF >> /fluentd/fluent.conf
+cat << EOF >> $FLUENTD_CONF
 </match>
 EOF
 
 echo "Sleeping for 15 seconds so the logger component has time to come up"
 sleep 15
 
-exec fluentd -c /fluentd/fluent.conf
+exec fluentd -c $FLUENTD_CONF
