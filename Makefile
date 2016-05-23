@@ -12,7 +12,7 @@ uninstall: kube-delete
 upgrade: kube-update
 
 docker-build:
-	docker build -t ${IMAGE} .
+	docker build -t ${IMAGE} rootfs
 	docker tag -f ${IMAGE} ${MUTABLE_IMAGE}
 
 kube-delete:
