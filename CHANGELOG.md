@@ -1,3 +1,10 @@
+### v2.0.0-beta4 -> v2.0.0-rc1
+
+#### Maintenance
+
+ - [`82ed849`](https://github.com/deis/fluentd/commit/82ed849bc156d0b1cafd06c65a5e0b454b646010) Dockerfile: Refactor image to use ubuntu-slim
+ - [`701c9cc`](https://github.com/deis/fluentd/commit/701c9ccf5b7b6edb8e0f602500bfefd2355fe181) syslog-plugin: Remove dead code
+
 ### v2.0.0-beta3 -> v2.0.0-beta4
 
 #### Documentation
