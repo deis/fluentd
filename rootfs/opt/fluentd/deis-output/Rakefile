@@ -1,0 +1,11 @@
+require 'bundler'
+gemdir = File.realpath(File.join(File.dirname(__FILE__), "."))
+Bundler::GemHelper.install_tasks :dir => gemdir, :name => 'fluent-plugin-deis_output'
+
+require 'rake/testtask'
+
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.test_files = FileList['test/**/test_*.rb']
+  test.verbose = true
+end

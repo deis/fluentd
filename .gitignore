@@ -1,1 +1,3 @@
 manifests/*.tmp.yaml
+rootfs/opt/fluentd/deis-output/pkg
+rootfs/*.gem
