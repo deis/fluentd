@@ -1,3 +1,9 @@
+### v2.0.0-rc2 -> v2.0.0
+
+#### Documentation
+
+- [`e945cb5`](https://github.com/deis/fluentd/commit/e945cb57f79fab482c5b835599af2bcc9da3cb51) CHANGELOG.md: add entry for v2.0.0-rc2
+
 ### v2.0.0-rc1 -> v2.0.0-rc2
 
 ### v2.0.0-beta4 -> v2.0.0-rc1
