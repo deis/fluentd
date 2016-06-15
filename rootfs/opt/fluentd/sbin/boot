@@ -15,13 +15,13 @@ if [ -e "/var/log/containers" ]
 then
 cat << EOF >> $FLUENTD_CONF
 <source>
-  type tail
+  @type tail
   path /var/log/containers/*.log
   pos_file /var/log/containers.log.pos
   time_format %Y-%m-%dT%H:%M:%S.%NZ
   tag kubernetes.*
   format json
-  read_from_head true
+  read_from_head false
 </source>
 
 # Example:
@@ -123,7 +123,7 @@ if [ -n "$KUBERNETES_SERVICE_HOST" ]
 then
 cat << EOF >> $FLUENTD_CONF
   <filter kubernetes.**>
-    type kubernetes_metadata
+    @type kubernetes_metadata
     kubernetes_url https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}
     bearer_token_file /var/run/secrets/kubernetes.io/serviceaccount/token
     verify_ssl false
@@ -199,10 +199,10 @@ EOF
 fi
 
 cat << EOF >> $FLUENTD_CONF
+<store>
+  @type deis
+</store>
 </match>
 EOF
-
-echo "Sleeping for 15 seconds so the logger component has time to come up"
-sleep 15
 
 exec fluentd -c $FLUENTD_CONF

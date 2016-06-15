@@ -18,7 +18,7 @@ docker-build:
 kube-delete:
 	-kubectl delete -f manifests/deis-logger-fluentd-daemon.tmp.yaml
 
-kube-create: update-manifests
+kube-install: update-manifests
 	kubectl create -f manifests/deis-logger-fluentd-daemon.tmp.yaml
 
 kube-update: update-manifests
@@ -27,3 +27,6 @@ kube-update: update-manifests
 
 update-manifests:
 	sed 's#\(image:\) .*#\1 $(IMAGE)#' manifests/deis-logger-fluentd-daemon.yaml > manifests/deis-logger-fluentd-daemon.tmp.yaml
+
+test: docker-build
+	docker run ${IMAGE} /bin/bash -c "cd /opt/fluentd/deis-output && rake test"
