@@ -1,0 +1,33 @@
+#!/bin/bash
+env | grep SYSLOG
+
+NUM=$(env | grep -oE '^(SYSLOG_HOST_\d*)' | wc -l)
+for ((i=1; i<=$NUM; i++)) do
+host=$(eval "echo \$SYSLOG_HOST_$i")
+port=$(eval "echo \$SYSLOG_PORT_$i")
+if [ -n "$host" ]
+then
+echo "Starting fluentd with syslog configuration! -- $host:$port"
+cat << EOF >> $FLUENTD_CONF
+<store>
+  @type remote_syslog
+  host $host
+  port $port
+  log_level warn
+</store>
+EOF
+fi
+done
+
+if [ -n "$SYSLOG_HOST" ]
+then
+echo "Starting fluentd with syslog configuration! -- $SYSLOG_HOST:$SYSLOG_PORT"
+cat << EOF >> $FLUENTD_CONF
+<store>
+  @type remote_syslog
+  host $SYSLOG_HOST
+  port $SYSLOG_PORT
+  log_level warn
+</store>
+EOF
+fi

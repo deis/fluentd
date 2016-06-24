@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ -n "$KUBERNETES_SERVICE_HOST" ]
+then
+cat << EOF >> $FLUENTD_CONF
+  <filter kubernetes.**>
+    @type kubernetes_metadata
+    kubernetes_url https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}
+    bearer_token_file /var/run/secrets/kubernetes.io/serviceaccount/token
+    verify_ssl false
+  </filter>
+EOF
+fi
