@@ -31,5 +31,3 @@ RUN apt-get update \
 COPY /var /var
 
 CMD ["/opt/fluentd/sbin/boot"]
-
-ENV WORKFLOW_RELEASE 2.0.0
