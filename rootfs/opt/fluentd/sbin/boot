@@ -11,6 +11,31 @@ EOF
 
 source /opt/fluentd/sbin/stores/stores
 
+if [ -n "$SUMOLOGIC_COLLECTOR_URL" ]
+then
+IS_HTTPS=`echo "$SUMOLOGIC_COLLECTOR_URL" | grep -c 'https://'`
+SUMOLOGIC_HOST=`echo "$SUMOLOGIC_COLLECTOR_URL" | sed 's/https*:\/\///' | cut -d '/' -f 1`
+SUMOLOGIC_ENDPOINT=`echo "$SUMOLOGIC_COLLECTOR_URL" | sed "s/.*:\/\/$SUMOLOGIC_HOST//"`
+
+SUMOLOGIC_PORT=443
+if [ $IS_HTTPS != 1 ]
+then
+  SUMOLOGIC_PORT=80
+fi
+
+cat << EOF >> $FLUENTD_CONF 
+<store>
+  buffer_type file
+  buffer_path /var/log/fluent/logcentral
+  type sumologic
+  host $SUMOLOGIC_HOST
+  port $SUMOLOGIC_PORT
+  format json
+  path $SUMOLOGIC_ENDPOINT
+</store>
+EOF
+fi
+
 cat << EOF >> $FLUENTD_CONF
 </match>
 EOF
