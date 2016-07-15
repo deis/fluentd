@@ -26,7 +26,15 @@ This plugin allows `fluentd` to send data to a remote syslog endpoint like [pape
 * `SYSLOG_HOST_2=some.other.host`
 * `SYSLOG_PORT_2=52232`
 
-You can also set `SYSLOG_HOST` and `SYSLOG_PORT`..
+You can also set `SYSLOG_HOST` and `SYSLOG_PORT`.
+
+### [fluent-plugin-sumologic](https://github.com/mattk42/fluent-plugin-sumologic)
+This plugin allows for `fluentd` to send all log data to a sumologic endpoint. You can configure it using the following environment variables:
+* `SUMOLOGIC_COLLECTOR_URL`
+* `SUMOLOGIC_ENDPOINT`
+* `SUMOLOGIC_HOST`
+* `SUMOLOGIC_PORT` : defaults to 80 (unless `IS_HTTPS` is set and then its 443)
+* `IS_HTTPS`
 
 ### Deis Output
 Deis output is a custom fluentd plugin that was written to forward data directly to deis components while filtering out data that we did not care about. We have 2 pieces of information we care about currently.
