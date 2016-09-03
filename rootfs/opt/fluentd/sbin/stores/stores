@@ -4,3 +4,4 @@ source /opt/fluentd/sbin/stores/deis
 source /opt/fluentd/sbin/stores/elastic_search
 source /opt/fluentd/sbin/stores/syslog
 source /opt/fluentd/sbin/stores/sumologic
+source /opt/fluentd/sbin/stores/custom_stores
