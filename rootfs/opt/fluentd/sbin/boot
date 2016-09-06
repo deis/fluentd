@@ -1,18 +1,6 @@
 #!/bin/bash
 FLUENTD_CONF="/opt/fluentd/conf/fluentd.conf"
 
-if [ $INSTALL_BUILD_TOOLS == "true" ]
-then
-  apt-get update
-  apt-get install -y \
-    g++ \
-    gcc \
-    make \
-    ruby \
-    ruby-dev 
-fi 
-
-source /opt/fluentd/sbin/plugins
 source /opt/fluentd/sbin/sources
 source /opt/fluentd/sbin/filters/filters
 
@@ -26,16 +14,5 @@ source /opt/fluentd/sbin/stores/stores
 cat << EOF >> $FLUENTD_CONF
 </match>
 EOF
-
-if [ $INSTALL_BUILD_TOOLS == "true" ]
-then
-  apt-get remove -y --auto-remove --purge \
-    g++ \
-    gcc \
-    make \
-    ruby-dev 
-  apt-get clean 
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man /usr/share/doc
-fi
 
 exec fluentd -c $FLUENTD_CONF
