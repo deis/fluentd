@@ -19,7 +19,6 @@ then
 cat << EOF >> $FLUENTD_CONF
 <store>
   @type elasticsearch
-  log_level warn
   include_tag_key true
   time_key time
   host ${ELASTICSEARCH_HOST}
