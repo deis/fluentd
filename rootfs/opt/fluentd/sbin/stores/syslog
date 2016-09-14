@@ -13,7 +13,6 @@ cat << EOF >> $FLUENTD_CONF
   @type remote_syslog
   host $host
   port $port
-  log_level warn
 </store>
 EOF
 fi
@@ -27,7 +26,6 @@ cat << EOF >> $FLUENTD_CONF
   @type remote_syslog
   host $SYSLOG_HOST
   port $SYSLOG_PORT
-  log_level warn
 </store>
 EOF
 fi
