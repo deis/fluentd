@@ -1,6 +1,16 @@
 #!/bin/bash
-FLUENTD_CONF="/opt/fluentd/conf/fluentd.conf"
+FLUENTD_CONF=${FLUENTD_CONF:-"/opt/fluentd/conf/fluentd.conf"}
+INSTALL_BUILD_TOOLS=${INSTALL_BUILD_TOOLS:-"false"}
+BUILD_TOOLS='g++ gcc make ruby-dev'
 
+if [ $INSTALL_BUILD_TOOLS == "true" ]
+then
+  echo "Installing Build tools!"
+  apt-get update
+  apt-get install -y ruby $BUILD_TOOLS
+fi
+
+source /opt/fluentd/sbin/plugins
 source /opt/fluentd/sbin/sources
 source /opt/fluentd/sbin/filters/filters
 
@@ -14,5 +24,13 @@ source /opt/fluentd/sbin/stores/stores
 cat << EOF >> $FLUENTD_CONF
 </match>
 EOF
+
+if [ $INSTALL_BUILD_TOOLS == "true" ]
+then
+  echo "Removing Build tools!"
+  apt-get remove -y --auto-remove --purge $BUILD_TOOLS
+  apt-get clean
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man /usr/share/doc
+fi
 
 exec fluentd -c $FLUENTD_CONF

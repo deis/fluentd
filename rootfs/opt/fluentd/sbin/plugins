@@ -1,0 +1,10 @@
+PLUGINS=$(env | grep -E '^(FLUENTD_PLUGIN_\d*)' | sed 's/=.*//')
+for plugin_var in $PLUGINS
+do
+  plugin=$(eval "echo \$$plugin_var")
+  if [ -n "$plugin" ]
+  then
+    echo "Installing fluentd plugin $plugin."
+    fluent-gem install --no-document $plugin
+  fi
+done
