@@ -10,6 +10,20 @@ then
   apt-get install -y ruby $BUILD_TOOLS
 fi
 
+# is there a broken symlink in /var/log/containers?
+BROKEN_LINK="$(find /var/log/containers/ -name '*.log' -type l -xtype l -print -quit)"
+if [ -n "$BROKEN_LINK" ]; then
+  echo "/var/log/containers contains broken links"
+  # extract the containers/ directory targeted by the broken symlink
+  TARGET_DIR="$(readlink -m "$BROKEN_LINK" | sed 's/\(.*containers\).*/\1/')"
+  # create the parent of the target directory
+  mkdir -p "$(dirname "$TARGET_DIR")"
+  # symlink the /var/lib/docker/containers volume to the target
+  # directory, assuming that's how things are on the host machine
+  ln -s /var/lib/docker/containers "$TARGET_DIR"
+  echo "linked /var/lib/docker/containers to $TARGET_DIR"
+fi
+
 source /opt/fluentd/sbin/plugins
 source /opt/fluentd/sbin/sources
 source /opt/fluentd/sbin/filters/filters
