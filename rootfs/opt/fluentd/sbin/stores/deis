@@ -1,6 +1,9 @@
 #!/bin/bash
+if [ -n "DISABLE_DEIS_OUTPUT" ]
+then
 cat << EOF >> $FLUENTD_CONF
 <store>
   @type deis
 </store>
 EOF
+fi
