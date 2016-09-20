@@ -11,6 +11,8 @@ This is an centos7 based image for running [fluentd](http://fluentd.org). It is 
 
 This work is based on the [docker-fluentd](https://github.com/fabric8io/docker-fluentd) and [docker-fluentd-kubernetes](https://github.com/fabric8io/docker-fluentd-kubernetes) images by the fabric8 team. This image is in with [deis](https://github.com/deis/deis) v2 to send all log data to the [logger](https://github.com/deis/logger) component.
 
+## Configuration
+
 ### Enable more verbose logging
 By default we do not capture kubernetes system logs. However, it is possible to tell fluentd to capture those logs just by specifying a few new environment variables.
 
@@ -23,6 +25,12 @@ By default we do not capture kubernetes system logs. However, it is possible to 
 * CAPTURE_SCHEDULER_LOG
 
 Set a variable's value to a non-empty string such as "true" to capture that log. Make these changes to the tpl/deis-logger-fluentd-daemon.yaml file in the Workflow chart directory.
+
+### Disable Deis Output
+To turn off the deis output plugin set the following environment variable to a non-empty string value
+* DISABLE_DEIS_OUTPUT
+
+This means we will not capture data from the log stream and send it to NSQ for processing. This means you will disable application logs (`deis logs`) and metrics generated from deis router.
 
 ## Plugins
 
