@@ -40,6 +40,21 @@ This plugin is used to decorate all log entries with kubernetes metadata.
 ### [fluent-plugin-elasticsearch](https://github.com/uken/fluent-plugin-elasticsearch)
 Allows fluentd to send log data to an elastic search cluster. You must specify an `ELASTICSEARCH_HOST` environment variable for this plugin to work.
 
+* `ELASTICSEARCH_HOST="some.host"`
+* `ELASTICSEARCH_SCHEME="http/https"`
+* `ELASTICSEARCH_PORT="9200"`
+* `ELASTICSEARCH_USER="username"`
+* `ELASTICSEARCH_PASSWORD="password"`
+* `ELASTICSEARCH_LOGSTASH_FORMAT="true/false"` - Creates indexes in the format `index_prefix-YYYY.MM.DD`
+* `ELASTICSEARCH_TARGET_INDEX_KEY="kubernetes.namespace_name"` - Allows the index name to come from within the log message map. See example message format below. This allows the user to have an index per namespace, container name, or other dynamic value.
+* `ELASTICSEARCH_TARGET_TYPE_KEY="some.key"` - Allows the user to set _type to a custom value found in the map.
+* `ELASTICSEARCH_INCLUDE_TAG_KEY="true/false"` - Merge the fluentd tag back into the log message map.
+* `ELASTICSEARCH_INDEX_NAME="fluentd"` - Set the index name where all events will be sent.
+* `ELASTICSEARCH_LOGSTASH_PREFIX="logstash"` - Set the logstash prefix variable which is used when you want to use logstash format without specifying `ELASTICSEARCH_TARGET_INDEX_KEY`.
+* `ELASTICSEARCH_TIME_KEY=""` - specify where the plugin can find the timestamp used for the `@timestamp` field
+* `ELASTICSEARCH_TIME_KEY_FORMAT=""` - specify the format of `ELASTICSEARCH_TIME_KEY`
+* `ELASTICSEARCH_TIME_KEY_EXCLUDE_TIMESTAMP=""` - If `ELASTICSEARCH_TIME_KEY` specified dont set ``@timestamp
+
 ### [fluent-plugin-remote_syslog](https://github.com/dlackty/fluent-plugin-remote_syslog)
 This plugin allows `fluentd` to send data to a remote syslog endpoint like [papertrail](http://papertrailapp.com). You can configure `fluentd` to talk to multiple remote syslog endpoints by using the following scheme:
 * `SYSLOG_HOST_1=some.host`
