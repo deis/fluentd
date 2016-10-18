@@ -42,6 +42,7 @@ module Fluent
       es.each do |time, record|
         if from_controller?(record) || deis_deployed_app?(record)
           @logger_nsq ||= get_nsq_producer(@log_topic)
+          record["time"] = Time.now().strftime("%FT%T.%6N%:z")
           push(@logger_nsq, record) if @logger_nsq
         end
 
