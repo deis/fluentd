@@ -28,6 +28,15 @@ source /opt/fluentd/sbin/plugins
 source /opt/fluentd/sbin/sources
 source /opt/fluentd/sbin/filters/filters
 
+if [ -n "$DROP_FLUENTD_LOGS" ]
+then
+cat << EOF >> $FLUENTD_CONF
+<match fluent.**>
+  type null
+</match>
+EOF
+fi
+
 cat << EOF >> $FLUENTD_CONF
 <match **>
   @type copy

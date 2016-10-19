@@ -26,6 +26,10 @@ By default we do not capture kubernetes system logs. However, it is possible to 
 
 Set a variable's value to a non-empty string such as "true" to capture that log. Make these changes to the tpl/deis-logger-fluentd-daemon.yaml file in the Workflow chart directory.
 
+### Drop Fluentd Logs
+To turn off log collection of fluentd's own logs to avoid infinite loops set the following environment variable to a non-empty string value
+* DROP_FLUENTD_LOGS
+
 ### Disable Deis Output
 To turn off the deis output plugin set the following environment variable to a non-empty string value
 * DISABLE_DEIS_OUTPUT
