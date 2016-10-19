@@ -24,6 +24,7 @@ cat << EOF >> $FLUENTD_CONF
   host ${ELASTICSEARCH_HOST}
   port ${ELASTICSEARCH_PORT}
   scheme ${ELASTICSEARCH_SCHEME}
+  logstash_format true
   $([ -n "${ELASTICSEARCH_USER}" ] && echo user ${ELASTICSEARCH_USER})
   $([ -n "${ELASTICSEARCH_PASSWORD}" ] && echo password ${ELASTICSEARCH_PASSWORD})
   buffer_type ${FLUENTD_BUFFER_TYPE}
