@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -n "$DISABLE_DEIS_OUTPUT" ]
+if [ -n "DISABLE_DEIS_OUTPUT" ]
 then
 cat << EOF >> $FLUENTD_CONF
 <store>
