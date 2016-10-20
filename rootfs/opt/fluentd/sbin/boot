@@ -3,7 +3,7 @@ FLUENTD_CONF=${FLUENTD_CONF:-"/opt/fluentd/conf/fluentd.conf"}
 INSTALL_BUILD_TOOLS=${INSTALL_BUILD_TOOLS:-"false"}
 BUILD_TOOLS='g++ gcc make ruby-dev'
 
-if [ $INSTALL_BUILD_TOOLS == "true" ]
+if [ "$INSTALL_BUILD_TOOLS" == "true" ]
 then
   echo "Installing Build tools!"
   apt-get update
@@ -48,7 +48,7 @@ cat << EOF >> $FLUENTD_CONF
 </match>
 EOF
 
-if [ $INSTALL_BUILD_TOOLS == "true" ]
+if [ "$INSTALL_BUILD_TOOLS" == "true" ]
 then
   echo "Removing Build tools!"
   apt-get remove -y --auto-remove --purge $BUILD_TOOLS
