@@ -1,6 +1,7 @@
 require 'json'
 require 'nsq'
 require 'influxdb'
+require 'yajl/json_gem'
 
 module Fluent
   module Mixin
@@ -44,7 +45,7 @@ module Fluent
       def push(producer, value)
         begin
           if value.kind_of? Hash
-            producer.write(value.to_json)
+            producer.write(JSON.dump(value))
           else
             producer.write(value)
           end
