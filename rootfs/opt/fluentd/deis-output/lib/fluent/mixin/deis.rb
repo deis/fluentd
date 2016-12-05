@@ -49,7 +49,8 @@ module Fluent
             producer.write(value)
           end
         rescue Exception => e
-          puts "Error:#{map.message}"
+          puts "Error:#{e.message}"
+          puts e.backtrace
         end
       end
 
