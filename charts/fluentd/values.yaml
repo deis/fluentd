@@ -5,6 +5,6 @@ docker_tag: canary
 # limits_memory: "50Mi"
 
 # external syslog endpoint
-# syslog:
-#  syslog_host: "external_syslog_endpoint_url"
-#  syslog_port: "external_syslog_endpoint_port"
+syslog:
+  syslog_host: "" # external syslog endpoint url
+  syslog_port: "" # external syslog endpoint port
