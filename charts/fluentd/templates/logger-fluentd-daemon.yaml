@@ -36,9 +36,9 @@ spec:
 {{- if and (.Values.syslog_host) (.Values.syslog_port)}}
         env:
           - name: "SYSLOG_HOST"
-            value: {{.Values.syslog.syslog_host | quote }}
+            value: {{.Values.syslog.host | quote }}
           - name: "SYSLOG_PORT"
-            value: {{.Values.syslog.syslog_port | quote }}
+            value: {{.Values.syslog.port | quote }}
           - name: "DROP_FLUENTD_LOGS"
             value: "true"
 {{- end}}
