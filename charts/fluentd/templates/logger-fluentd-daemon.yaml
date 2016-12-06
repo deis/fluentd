@@ -33,7 +33,7 @@ spec:
             memory: {{.Values.limits_memory}}
 {{- end}}
 {{- end}}
-{{- and (.Values.syslog_host) (.Values.syslog_port)}}
+{{- if and (.Values.syslog_host) (.Values.syslog_port)}}
         env:
           - name: "SYSLOG_HOST"
             value: {{.Values.syslog.syslog_host | quote }}
