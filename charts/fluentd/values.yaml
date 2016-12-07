@@ -8,3 +8,4 @@ docker_tag: canary
 syslog:
   host: "" # external syslog endpoint url
   port: "" # external syslog endpoint port
+
