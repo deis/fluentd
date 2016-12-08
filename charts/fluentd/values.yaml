@@ -3,3 +3,9 @@ pull_policy: "Always"
 docker_tag: canary
 # limits_cpu: "100m"
 # limits_memory: "50Mi"
+
+# external syslog endpoint
+syslog:
+  host: "" # external syslog endpoint url
+  port: "" # external syslog endpoint port
+
