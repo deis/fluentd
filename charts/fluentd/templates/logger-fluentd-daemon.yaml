@@ -33,15 +33,16 @@ spec:
             memory: {{.Values.limits_memory}}
 {{- end}}
 {{- end}}
-{{- if and (.Values.syslog.host) (.Values.syslog.port)}} 
         env:
+          {{- range $key, $value := .Values.daemon_environment }}
+              {{ $key }}: {{ $value }}
+          {{- end }}
+          {{- if and (.Values.syslog.host) (.Values.syslog.port)}}
           - name: "SYSLOG_HOST"
             value: {{.Values.syslog.host | quote }}
           - name: "SYSLOG_PORT"
             value: {{.Values.syslog.port | quote }}
-          - name: "DROP_FLUENTD_LOGS"
-            value: "true"
-{{- end}}
+          {{- end}}
         volumeMounts:
         - name: varlog
           mountPath: /var/log
