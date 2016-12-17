@@ -9,7 +9,3 @@ syslog:
   host: "" # external syslog endpoint url
   port: "" # external syslog endpoint port
 
-# Any custom fluentd environment variables (https://github.com/deis/fluentd#configuration)
-# can be specified as key-value pairs under daemon_environment.
-daemon_environment:
-  #<example-env>: <example-value>
