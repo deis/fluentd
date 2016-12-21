@@ -39,8 +39,6 @@ spec:
             value: {{.Values.syslog.host | quote }}
           - name: "SYSLOG_PORT"
             value: {{.Values.syslog.port | quote }}
-          - name: "DROP_FLUENTD_LOGS"
-            value: "true"
           {{- end}}
           {{- range $key, $value := .Values.daemon_environment }}
           - name: {{ $key }}
