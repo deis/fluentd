@@ -44,6 +44,7 @@ cat << EOF >> $FLUENTD_CONF
   $([ -n "$ELASTICSEARCH_INCLUDE_TAG_KEY" ] && echo include_tag_key ${ELASTICSEARCH_INCLUDE_TAG_KEY})
   $([ -n "$ELASTICSEARCH_TARGET_INDEX_KEY" ] && echo target_index_key ${ELASTICSEARCH_TARGET_INDEX_KEY})
   $([ -n "$ELASTICSEARCH_TARGET_TYPE_KEY" ] && echo target_type_key ${ELASTICSEARCH_TARGET_TYPE_KEY})
+  $([ -n "$ELASTICSEARCH_RELOAD_CONNECTIONS" ] && echo reload_connections ${ELASTICSEARCH_RELOAD_CONNECTIONS})
   logstash_format ${ELASTICSEARCH_LOGSTASH_FORMAT}
   buffer_type ${FLUENTD_BUFFER_TYPE}
   $([ "${FLUENTD_BUFFER_TYPE}" == "file" ] && echo buffer_path ${FLUENTD_BUFFER_PATH})
