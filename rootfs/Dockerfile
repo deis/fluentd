@@ -7,7 +7,7 @@ RUN buildDeps='g++ gcc make ruby-dev'; \
     apt-get install -y \
         $buildDeps \
         ruby && \
-    export FLUENTD_VERSION=0.14.4 && \
+    export FLUENTD_VERSION=0.14.13 && \
     gem install --no-document fluentd -v $FLUENTD_VERSION && \
     gem install bundler && \
     bundle install --gemfile=/opt/fluentd/deis-output/Gemfile && \
