@@ -34,6 +34,11 @@ To turn off log collection of fluentd's own logs to avoid infinite loops set the
 To turn off the deis output plugin set the following environment variable to a non-empty string value
 * DISABLE_DEIS_OUTPUT
 
+### Disable sending log or metrics data to nsq
+To turn off sending log or metrics data to nsq set the following environment variable to "false"
+* SEND_LOGS_TO_NSQ
+* SEND_METRICS_TO_NSQ
+
 This means we will not capture data from the log stream and send it to NSQ for processing. This means you will disable application logs (`deis logs`) and metrics generated from deis router.
 
 ## Plugins
