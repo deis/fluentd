@@ -42,7 +42,7 @@ spec:
           {{- end}}
           {{- range $key, $value := .Values.daemon_environment }}
           - name: {{ $key }}
-            value: {{ $value }}
+            value: {{ $value | quote }}
           {{- end }}
         volumeMounts:
         - name: varlog
