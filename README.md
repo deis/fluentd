@@ -4,7 +4,7 @@ Deis (pronounced DAY-iss) is an open source PaaS that makes it easy to deploy an
 applications on your own servers. Deis builds on [Kubernetes](http://kubernetes.io/) to provide
 a lightweight, [Heroku-inspired](http://heroku.com) workflow.
 
-![Deis Graphic](https://s3-us-west-2.amazonaws.com/get-deis/deis-graphic-small.png)
+![Deis Graphic](https://getdeis.blob.core.windows.net/get-deis/deis-graphic-small.png)
 
 ## About
 This is an centos7 based image for running [fluentd](http://fluentd.org). It is built for the purpose of running on a kubernetes cluster.
