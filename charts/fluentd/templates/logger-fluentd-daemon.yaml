@@ -34,12 +34,48 @@ spec:
 {{- end}}
 {{- end}}
         env:
+          {{- if .Values.sources.start_script }}
+          - name: "CAPTURE_START_SCRIPT"
+            value: {{.Values.sources.start_script | quote }}
+          {{- end }}
+          {{- if .Values.sources.docker }}
+          - name: "CAPTURE_DOCKER_LOG"
+            value: {{.Values.sources.docker | quote }}
+          {{- end }}
+          {{- if .Values.sources.etcd }}
+          - name: "CAPTURE_ETCD_LOG"
+            value: {{.Values.sources.etcd | quote }}
+          {{- end }}
+          {{- if .Values.sources.kubelet }}
+          - name: "CAPTURE_KUBELET_LOG"
+            value: {{.Values.sources.kubelet | quote }}
+          {{- end }}
+          {{- if .Values.sources.kube_api }}
+          - name: "CAPTURE_KUBE_API_LOG"
+            value: {{.Values.sources.kube_api | quote }}
+          {{- end }}
+          {{- if .Values.sources.controller }}
+          - name: "CAPTURE_CONTROLLER_LOG"
+            value: {{.Values.sources.controller | quote }}
+          {{- end }}
+          {{- if .Values.sources.scheduler }}
+          - name: "CAPTURE_SCHEDULER_LOG"
+            value: {{.Values.sources.scheduler | quote }}
+          {{- end }}
+          {{- if .Values.output.disable_deis }}
+          - name: "DISABLE_DEIS_OUTPUT"
+            value: {{.Values.output.disable_deis | quote }}
+          {{- end }}
+          {{- if .Values.boot.install_build_tools }}
+          - name: "INSTALL_BUILD_TOOLS"
+            value: {{.Values.boot.install_build_tools | quote }}
+          {{- end }}
           {{- if and (.Values.syslog.host) (.Values.syslog.port)}}
           - name: "SYSLOG_HOST"
             value: {{.Values.syslog.host | quote }}
           - name: "SYSLOG_PORT"
             value: {{.Values.syslog.port | quote }}
-          {{- end}}
+          {{- end }}
           {{- range $key, $value := .Values.daemon_environment }}
           - name: {{ $key }}
             value: {{ $value }}
