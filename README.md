@@ -1,4 +1,5 @@
 ## Description
+[![Build Status](https://ci.deis.io/job/fluentd/badge/icon)](https://ci.deis.io/job/fluentd)
 
 Deis (pronounced DAY-iss) is an open source PaaS that makes it easy to deploy and manage
 applications on your own servers. Deis builds on [Kubernetes](http://kubernetes.io/) to provide
