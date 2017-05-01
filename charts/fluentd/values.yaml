@@ -9,6 +9,21 @@ syslog:
   host: "" # external syslog endpoint url
   port: "" # external syslog endpoint port
 
+sources:
+  start_script: false
+  docker: false
+  etcd: false
+  kubelet: false
+  kube_api: false
+  controller: false
+  scheduler: false
+
+output:
+  disable_deis: false
+  
+boot:
+  install_build_tools: false
+
 # Any custom fluentd environment variables (https://github.com/deis/fluentd#configuration)
 # can be specified as key-value pairs under daemon_environment.
 daemon_environment:
