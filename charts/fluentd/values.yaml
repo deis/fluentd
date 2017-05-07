@@ -20,7 +20,7 @@ sources:
 
 output:
   disable_deis: false
-  
+
 boot:
   install_build_tools: false
 
@@ -28,3 +28,7 @@ boot:
 # can be specified as key-value pairs under daemon_environment.
 daemon_environment:
   #<example-env>: <example-value>
+
+# Role-Based Access Control for Kubernetes >= 1.5
+global:
+  use_rbac: false
