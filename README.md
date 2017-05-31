@@ -82,6 +82,12 @@ This plugin allows for `fluentd` to send all log data to a sumologic endpoint. Y
 * `SUMOLOGIC_PORT` : defaults to 80 (unless `IS_HTTPS` is set and then its 443)
 * `IS_HTTPS`
 
+### [fluent-plugin-gelf-hs](https://github.com/bodhi-space/fluent-plugin-gelf-hs)
+This plugin allows for `fluentd` to send all log data to a remote graylog endpoint. You can configure it using the following environment variables:
+* `GELF_HOST=some.host`
+* `GELF_PORT=12201`
+* `GELF_PROTOCOL="udp/tcp"`
+
 ### Deis Output
 Deis output is a custom fluentd plugin that was written to forward data directly to deis components while filtering out data that we did not care about. We have 2 pieces of information we care about currently.
 

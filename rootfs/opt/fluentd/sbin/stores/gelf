@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ -n "$GELF_HOST" ]
+then
+  echo "Starting fluentd with gelf configuration!"
+  GELF_PORT=${GELF_PORT:-12201}
+  GELF_PROTOCOL=${GELF_PROTOCOL:-udp}
+
+
+cat << EOF >> $FLUENTD_CONF 
+<store>
+  @type gelf
+  host ${GELF_HOST}
+  port ${GELF_PORT}
+  protocol ${GELF_PROTOCOL}
+</store>
+EOF
+fi
