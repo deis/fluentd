@@ -5,14 +5,33 @@ then
   echo "Starting fluentd with gelf configuration!"
   GELF_PORT=${GELF_PORT:-12201}
   GELF_PROTOCOL=${GELF_PROTOCOL:-udp}
+  GELF_TLS=${GELF_TLS:-false}
+  GELF_TLS_OPTIONS_TLS_VERSION=${GELF_TLS_OPTIONS_TLS_VERSION:-":TLSv1_2"}
+  GELF_TLS_OPTIONS_NO_DEFAULT_CA=${GELF_TLS_OPTIONS_NO_DEFAULT_CA:-false}
+  GELF_TLS_OPTIONS_ALL_CIPHERS=${GELF_TLS_OPTIONS_ALL_CIPHERS:-false}
 
+  if [ "$GELF_TLS" == true ] && (! [ -n "$GELF_TLS_OPTIONS_CERT" ] || ! [ -n "$GELF_TLS_OPTIONS_KEY" ])
+  then
+	echo "error: GELF_TLS_OPTIONS_{KEY,CERT} must be both provided"
+  elif [ "$GELF_TLS" == true ]
+  then
+	declare -a arr=("cert" "key" "no_default_ca" "all_ciphers" "tls_version")
+	TLS_OPTIONS=""
+	for element in "${arr[@]}"
+	do
+	   tmp="GELF_TLS_OPTIONS_${element^^}"
+	   TLS_OPTIONS+='"'$element'":"'${!tmp}'",'
+	done
+  fi
 
-cat << EOF >> $FLUENTD_CONF 
+cat << EOF >> $FLUENTD_CONF
 <store>
   @type gelf
-  host ${GELF_HOST}
+  host '${GELF_HOST}'
   port ${GELF_PORT}
-  protocol ${GELF_PROTOCOL}
+  protocol '${GELF_PROTOCOL}'
+  tls ${GELF_TLS}
+  tls_options '{$([ "${GELF_TLS}" == true ] && echo "${TLS_OPTIONS::-1}")}'
 </store>
 EOF
 fi

@@ -87,6 +87,12 @@ This plugin allows for `fluentd` to send all log data to a remote graylog endpoi
 * `GELF_HOST=some.host`
 * `GELF_PORT=12201`
 * `GELF_PROTOCOL="udp/tcp"`
+* `GELF_TLS="true/false"`
+* `GELF_TLS_OPTIONS_CERT="-----BEGIN CERTIFICATE-----\n[...]\n-----END CERTIFICATE-----"`
+* `GELF_TLS_OPTIONS_KEY="-----BEGIN PRIVATE KEY-----\n[...]\n-----END PRIVATE KEY-----"`
+* `GELF_TLS_OPTIONS_ALL_CIPHERS="true/false"`
+* `GELF_TLS_OPTIONS_TLS_VERSION=":TLSv1/:TLSv1_1/:TLSv1_2"`
+* `GELF_TLS_OPTIONS_NO_DEFAULT_CA="true/false"`
 
 ### Deis Output
 Deis output is a custom fluentd plugin that was written to forward data directly to deis components while filtering out data that we did not care about. We have 2 pieces of information we care about currently.
