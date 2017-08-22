@@ -1,5 +1,4 @@
 #!/bin/bash
-
 if [ -n "$GELF_HOST" ]
 then
   echo "Starting fluentd with gelf configuration!"
@@ -9,6 +8,10 @@ then
   GELF_TLS_OPTIONS_TLS_VERSION=${GELF_TLS_OPTIONS_TLS_VERSION:-":TLSv1_2"}
   GELF_TLS_OPTIONS_NO_DEFAULT_CA=${GELF_TLS_OPTIONS_NO_DEFAULT_CA:-false}
   GELF_TLS_OPTIONS_ALL_CIPHERS=${GELF_TLS_OPTIONS_ALL_CIPHERS:-false}
+  FLUENTD_BUFFER_CHUNK_LIMIT=${FLUENTD_BUFFER_CHUNK_LIMIT:-8m}
+  FLUENTD_BUFFER_QUEUE_LIMIT=${FLUENTD_BUFFER_QUEUE_LIMIT:-256}
+  FLUENTD_FLUSH_INTERVAL=${FLUENTD_FLUSH_INTERVAL:-10s}
+
 
   if [ "$GELF_TLS" == true ] && (! [ -n "$GELF_TLS_OPTIONS_CERT" ] || ! [ -n "$GELF_TLS_OPTIONS_KEY" ])
   then
@@ -32,6 +35,9 @@ cat << EOF >> $FLUENTD_CONF
   protocol '${GELF_PROTOCOL}'
   tls ${GELF_TLS}
   tls_options '{$([ "${GELF_TLS}" == true ] && echo "${TLS_OPTIONS::-1}")}'
+  buffer_chunk_limit ${FLUENTD_BUFFER_CHUNK_LIMIT}
+  buffer_queue_limit ${FLUENTD_BUFFER_QUEUE_LIMIT}
+  flush_interval ${FLUENTD_FLUSH_INTERVAL}
 </store>
 EOF
 fi
