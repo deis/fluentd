@@ -8,11 +8,17 @@ port=$(eval "echo \$SYSLOG_PORT_$i")
 if [ -n "$host" ]
 then
 echo "Starting fluentd with syslog configuration! -- $host:$port"
+FLUENTD_BUFFER_CHUNK_LIMIT=${FLUENTD_BUFFER_CHUNK_LIMIT:-8m}
+FLUENTD_BUFFER_QUEUE_LIMIT=${FLUENTD_BUFFER_QUEUE_LIMIT:-256}
+FLUENTD_FLUSH_INTERVAL=${FLUENTD_FLUSH_INTERVAL:-10s}
 cat << EOF >> $FLUENTD_CONF
 <store>
   @type remote_syslog
   host $host
   port $port
+  buffer_chunk_limit ${FLUENTD_BUFFER_CHUNK_LIMIT}
+  buffer_queue_limit ${FLUENTD_BUFFER_QUEUE_LIMIT}
+  flush_interval ${FLUENTD_FLUSH_INTERVAL}
 </store>
 EOF
 fi
@@ -21,11 +27,17 @@ done
 if [ -n "$SYSLOG_HOST" ]
 then
 echo "Starting fluentd with syslog configuration! -- $SYSLOG_HOST:$SYSLOG_PORT"
+FLUENTD_BUFFER_CHUNK_LIMIT=${FLUENTD_BUFFER_CHUNK_LIMIT:-8m}
+FLUENTD_BUFFER_QUEUE_LIMIT=${FLUENTD_BUFFER_QUEUE_LIMIT:-256}
+FLUENTD_FLUSH_INTERVAL=${FLUENTD_FLUSH_INTERVAL:-10s}
 cat << EOF >> $FLUENTD_CONF
 <store>
   @type remote_syslog
   host $SYSLOG_HOST
   port $SYSLOG_PORT
+  buffer_chunk_limit ${FLUENTD_BUFFER_CHUNK_LIMIT}
+  buffer_queue_limit ${FLUENTD_BUFFER_QUEUE_LIMIT}
+  flush_interval ${FLUENTD_FLUSH_INTERVAL}
 </store>
 EOF
 fi
